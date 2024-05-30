@@ -1,7 +1,6 @@
 import socket
 import threading
 import sys
-import psutil
 
 class Server:
     
@@ -10,6 +9,7 @@ class Server:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connections = {}
         self.lock = threading.Lock()
+
     def handle_client(self, client_socket, client_name):
         try:
             while True:
@@ -35,7 +35,7 @@ class Server:
             active_clients = list(self.connections.keys())
         message = "Active Clients: " + ", ".join(active_clients)
         for connection in self.connections.values():
-            connection.send(bytes( message, 'utf-8'))
+            connection.send(bytes(message, 'utf-8'))
 
     def run(self):
         self.sock.bind(('0.0.0.0', 62561))
@@ -86,4 +86,3 @@ if len(sys.argv) > 1:
 else:
     server = Server()
     server.run()
-
