@@ -1,20 +1,19 @@
 import socket
 import threading
 import sys
-from prometheus_client import start_http_server, Gauge
 import psutil
 
 class Server:
-    cpu_usage = Gauge("cpu_usage", "this measures the cpu usage")
+    
     def __init__(self):
-        start_http_server(8000)
+    
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connections = {}
         self.lock = threading.Lock()
     def handle_client(self, client_socket, client_name):
         try:
             while True:
-                self.cpu_usage.set(psutil.cpu_percent(interval=1))
+                
                 data = client_socket.recv(1024)
                 if not data:
                     break
